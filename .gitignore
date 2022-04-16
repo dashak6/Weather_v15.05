@@ -127,3 +127,10 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Django
+/venv
+/weather_project/db.sqlite3
+/weather_project/weather_project/__pycache__
+/weather_project/meteo_app/__pycache__
+/weather_project/meteo_app/files
