@@ -1,0 +1,19 @@
+{% extends "meteo_app/base.html" %}
+
+{% block content %}
+    {% if message %}
+        <div class="alert alert-warning" role="alert">
+            {{ message }}
+        </div>
+    {% endif %}
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                <h1 class="display-6">Информация о погоде</h1>
+                <br>
+                <p><a class="btn btn-outline-primary" href="meteo-data" role="button">Данные с метеостанции</a></p>
+                <p><a class="btn btn-outline-primary" href="wind-data" role="button">Данные с ветряного модуля</a></p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

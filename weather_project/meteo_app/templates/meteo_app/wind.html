@@ -1,0 +1,93 @@
+{% extends "meteo_app/base.html" %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <h1 class="display-6">Данные с ветряного модуля</h1>
+            <p><a class="btn btn-outline-success" href="{% url 'download-wind-data' %}" role="button">Скачать</a></p>
+            <div class="col-6">  
+                <table class="table table-hover table-bordered">
+                    <thead>
+                      <tr>
+                        <th scope="col">Данные</th>
+                        <th scope="col">Аббревиатура</th>
+                        <th scope="col">Значение</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Cкорость ветра (м/с) за 3 сек</td>
+                        <td>WS1AVG</td>
+                        <td>{{data.WS1AVG}}</td>
+                      </tr>
+                      <tr>
+                        <td>Направление ветра (град) за 3 сек</td>
+                        <td>WD1AVG</td>
+                        <td>{{data.WD1AVG}}</td>
+                      </tr>
+                      <tr>
+                        <td>Скорость ветра (м/с) минимальное значение за 2 минуты</td>
+                        <td>WS1MIN2</td>
+                        <td>{{data.WS1MIN2}}</td>
+                      </tr>
+                      <tr>
+                        <td>Скорость ветра (м/с) среднее значение за 2 минуты</td>
+                        <td>WS1AVG2</td>
+                        <td>{{data.WS1AVG2}}</td>
+                      </tr>
+                      <tr>
+                        <td>Скорость ветра (м/с) максимальное значение за 2 минуты</td>
+                        <td>WS1MAX2</td>
+                        <td>{{data.WS1MAX2}}</td>
+                      </tr>
+                      <tr>
+                        <td>Направление ветра (град) минимальное значение за 2 минуты</td>
+                        <td>WD1MIN2</td>
+                        <td>{{data.WD1MIN2}}</td>
+                      </tr>
+                      <tr>
+                        <td>Направление ветра (град) среднее значение за 2 минуты</td>
+                        <td>WD1AVG2</td>
+                        <td>{{data.WD1AVG2}}</td>
+                      </tr>
+                      <tr>
+                        <td>Направление ветра (град) максимальное значение за 2 минуты/td>
+                        <td>WD1MAX2</td>
+                        <td>{{data.WD1MAX2}}</td>
+                      </tr>
+                      <tr>
+                        <td>Скорость ветра (м/с) минимальное значение за 10 минут</td>
+                        <td>WS1MIN10</td>
+                        <td>{{data.WS1MIN10}}</td>
+                      </tr>
+                      <tr>
+                        <td>Скорость ветра (м/с) среднее значение за 10 минут</td>
+                        <td>WS1AVG10</td>
+                        <td>{{data.WS1AVG10}}</td>
+                      </tr>
+                        <td>Скорость ветра (м/с) максимальное значение за 2 минуты</td>
+                        <td>WS1MAX10</td>
+                        <td>{{data.WS1MAX10}}</td>
+                      </tr>
+                      <tr>
+                        <td>Направление ветра (град) минимальное значение за 10 минут</td>
+                        <td>WD1MIN10</td>
+                        <td>{{data.WD1MIN10}}</td>
+                      </tr>
+                      <tr>
+                        <td>Направление ветра (град) среднее значение за 10 минут</td>
+                        <td>WD1AVG10</td>
+                        <td>{{data.WD1AVG10}}</td>
+                      </tr>
+                      <tr>
+                        <td>Направление ветра (град) максимальное значение за 10 минут</td>
+                        <td>WD1MAX10</td>
+                        <td>{{data.WD1MAX10}}</td>
+                      </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+{% endblock %}
