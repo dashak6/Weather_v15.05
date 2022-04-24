@@ -12,5 +12,4 @@ urlpatterns = [
     path('download/meteo-data-xlsx', views.download_meteo_data_xlsx, name='download-meteo-data-xlsx'),
     path('download/wind-data', views.download_wind_data, name='download-wind-data'),
     path('download/wind-data-xlsx', views.download_wind_data_xlsx, name='download-wind-data-xlsx'),
-    
 ]

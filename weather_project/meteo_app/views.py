@@ -63,6 +63,7 @@ def meteo_data(request):
         }
         return render(request, 'meteo_app/meteo.html', context)
 
+
 def meteo_data_pk(request, pk):
     if request.user.is_authenticated:
         data = MeteoData.objects.get(id=pk)
@@ -72,6 +73,7 @@ def meteo_data_pk(request, pk):
         }
         return render(request, 'meteo_app/meteo.html', context)
     return redirect('auth-page')
+
 
 def wind_data(request):
     if request.user.is_authenticated:
@@ -98,6 +100,7 @@ def wind_data(request):
         }
         return render(request, 'meteo_app/wind.html', context)
 
+
 def download_meteo_data(request):
     if request.user.is_authenticated:
         filepath = os.path.join(str(BASE_DIR)+"/meteo_app/files/meteo.csv")
@@ -107,6 +110,7 @@ def download_meteo_data(request):
         response['Content-Disposition'] = 'attachment; filename="meteodata.csv"'
         return response
     return redirect('auth-page')
+
 
 def download_meteo_data_xlsx(request):
     if request.user.is_authenticated:
@@ -128,6 +132,7 @@ def download_wind_data(request):
         response['Content-Disposition'] = 'attachment; filename="winddata.csv"'
         return response
     return redirect('auth-page')
+
 
 def download_wind_data_xlsx(request):
     if request.user.is_authenticated:

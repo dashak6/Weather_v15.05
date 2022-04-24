@@ -1,6 +1,7 @@
 import csv
 import xlsxwriter 
 
+
 def model_data_to_csv(model, filename):
     dataobject = model.objects.all()
     # получение названий всех колонок (заголовок)
