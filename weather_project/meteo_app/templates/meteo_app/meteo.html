@@ -4,91 +4,68 @@
     <div class="container">
         <div class="row">
             <h1 class="display-6">Метеорологические данные</h1>
-            <p><a class="btn btn-outline-success" href="{% url 'download-meteo-data' %}" role="button">Скачать</a></p>
-            <div class="col-6">  
+            {% if user.is_authenticated %}
+            <p>
+                <a class="btn btn-outline-success" href="{% url 'download-meteo-data' %}" role="button">Скачать .csv</a>
+                <a class="btn btn-outline-success" href="{% url 'download-meteo-data-xlsx' %}" role="button">Скачать .xlsx</a>
+            </p>
+            <div class="col-6">
+              <form class="row g-3" action="{% url 'meteo-data' %}" method="get">
+                <div class="col-auto">
+                  <input type="text" class="form-control" placeholder="Дата с:"name="date_from">
+                </div>
+                <div class="col-auto">
+                  <input type="text" class="form-control" placeholder="Дата по:" name="date_to" aria-describedby="dateInlineHelp">
+                </div>
+                <div class="col-auto">
+                  <button type="submit" class="btn btn-outline-secondary mb-3">Искать</button>
+                </div>
+                <div id="dateInlineHelp" class="form-text">Введите дату в формате "ГГГГ-ММ-ДД". Для поиска по времени введите дату и время в формате "ГГГГ-ММ-ДД ЧЧ:ММ"</div>
+              </form>
+              {% endif %}
+              <br>
                 <table class="table table-hover table-bordered">
-                    <thead>
-                      <tr>
-                        <th scope="col">Данные</th>
-                        <th scope="col">Аббревиатура</th>
-                        <th scope="col">Значение</th>
-                      </tr>
-                    </thead>
                     <tbody>
                       <tr>
-                        <td>Среднее значение температуры за 1 минуту, C</td>
-                        <td>TA</td>
-                        <td>{{data.TA }}</td>
+                        <th scope="col">id</th>
+                        <th scope="col">date</th>
+                        <th scope="col">TA</th>
+                        <th scope="col">DP</th>
+                        <th scope="col">WC</th>
+                        <th scope="col">RH</th>
+                        <th scope="col">PR</th>
+                        <th scope="col">PR1H</th>
+                        <th scope="col">PR24H</th>
+                        <th scope="col">SR_1M</th>
+                        <th scope="col">SR_1D</th>
+                        <th scope="col">SR_45_1M</th>
+                        <th scope="col">SR_45_1D</th>
+                        <th scope="col">SD_1H</th>
+                        <th scope="col">SD_1D</th>
+                        <th scope="col">SD_45_1H</th>
+                        <th scope="col">SD_45_1D</th>
                       </tr>
+                    {% for data in dataset %}
                       <tr>
-                        <td>Точка росы, C</td>
-                        <td>DP</td>
-                        <td>{{data.DP}}</td>
+                        <td scope="col">{{ data.id }}</td>
+                        <td scope="col">{{ data.date|date:"d.m.Y H:i:s"}}</td>
+                        <td scope="col">{{data.TA}}</td>
+                        <td scope="col">{{data.DP}}</td>
+                        <td scope="col">{{data.WC}}</td>
+                        <td scope="col">{{data.RH}}</td>
+                        <td scope="col">{{data.PR}}</td>
+                        <td scope="col">{{data.PR1H}}</td>
+                        <td scope="col">{{data.PR24H}}</td>
+                        <td scope="col">{{data.SR_1M}}</td>
+                        <td scope="col">{{data.SR_1D}}</td>
+                        <td scope="col">{{data.SR_45_1M}}</td>
+                        <td scope="col">{{data.SR_45_1D}}</td>
+                        <td scope="col">{{data.SD_1H}}</td>
+                        <td scope="col">{{data.SD_1D}}</td>
+                        <td scope="col">{{data.SD_45_1H}}</td>
+                        <td scope="col">{{data.SD_45_1D}}</td>
                       </tr>
-                      <tr>
-                        <td>Пусто</td>
-                        <td>WC</td>
-                        <td>{{data.WC}}</td>
-                      </tr>
-                      <tr>
-                        <td>Относительная влажность, %</td>
-                        <td>RH</td>
-                        <td>{{data.RH}}</td>
-                      </tr>
-                      <tr>
-                        <td>Атмосферное давление, mm Hg</td>
-                        <td>PA</td>
-                        <td>{{data.PA}}</td>
-                      </tr>
-                      <tr>
-                        <td>Количество жидких осадков мгновенное значение, мм</td>
-                        <td>PR</td>
-                        <td>{{data.PR}}</td>
-                      </tr>
-                      <tr>
-                        <td>Количество жидких осадков сумма за 1 час, мм</td>
-                        <td>PR1H</td>
-                        <td>{{data.PR1H}}</td>
-                      </tr>
-                      <tr>
-                        <td>Количество жидких осадков сумма за сутки, мм</td>
-                        <td>PR24H</td>
-                        <td>{{data.PR24H}}</td>
-                      </tr>
-                      <tr>
-                        <td>Данные от CMP6 установленного параллельно относительно поверхности земли (Вт/м²) среднее значение за 1 минуту</td>
-                        <td>SR_1M</td>
-                        <td>{{data.SR_1M}}</td>
-                      </tr>
-                      <tr>
-                        <td>Данные от CMP6 установленного параллельно относительно поверхности земли (Вт/м²) среднее значение за 24 часа</td>
-                        <td>SR_1D</td>
-                        <td>{{data.SR_1D}}</td>
-                      </tr>
-                        <td>Данные от CMP6 установленного 45 градусов относительно поверхности земли (Вт/м²) среднее значение за 1 минуту</td>
-                        <td>SR_45_1M</td>
-                        <td>{{data.SR_45_1M}}</td>
-                      </tr>
-                      <tr>
-                        <td>Данные от CMP6 установленного 45 градусов относительно поверхности земли (Вт/м²) среднее значение за 24 часа</td>
-                        <td>SR_45_1D</td>
-                        <td>{{data.SR_45_1D}}</td>
-                      </tr>
-                      <tr>
-                        <td>Данные от CMP6 установленного 45 градусов относительно поверхности земли (Вт/м²) суммарное значение за 1 час</td>
-                        <td>SD_1H</td>
-                        <td>{{data.SD_1H}}</td>
-                      </tr>
-                      <tr>
-                        <td>Данные от CMP6 установленного 45 градусов относительно поверхности земли (Вт/м²) суммарное значение за 24 часа</td>
-                        <td>SD_1D</td>
-                        <td>{{data.SD_1D}}</td>
-                      </tr>
-                      <tr>
-                        <td>Данные от CMP6 установленного 45 градусов относительно поверхности земли (Вт/м²) суммарное значение за 24 часа</td>
-                        <td>SD_45_1D</td>
-                        <td>{{data.SD_45_1D}}</td>
-                      </tr>
+                      {% endfor %}
                     </tbody>
                 </table>
             </div>

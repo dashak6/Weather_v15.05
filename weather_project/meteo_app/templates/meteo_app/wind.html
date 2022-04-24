@@ -4,88 +4,68 @@
     <div class="container">
         <div class="row">
             <h1 class="display-6">Данные с ветряного модуля</h1>
-            <p><a class="btn btn-outline-success" href="{% url 'download-wind-data' %}" role="button">Скачать</a></p>
-            <div class="col-6">  
-                <table class="table table-hover table-bordered">
-                    <thead>
-                      <tr>
-                        <th scope="col">Данные</th>
-                        <th scope="col">Аббревиатура</th>
-                        <th scope="col">Значение</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>Cкорость ветра (м/с) за 3 сек</td>
-                        <td>WS1AVG</td>
-                        <td>{{data.WS1AVG}}</td>
-                      </tr>
-                      <tr>
-                        <td>Направление ветра (град) за 3 сек</td>
-                        <td>WD1AVG</td>
-                        <td>{{data.WD1AVG}}</td>
-                      </tr>
-                      <tr>
-                        <td>Скорость ветра (м/с) минимальное значение за 2 минуты</td>
-                        <td>WS1MIN2</td>
-                        <td>{{data.WS1MIN2}}</td>
-                      </tr>
-                      <tr>
-                        <td>Скорость ветра (м/с) среднее значение за 2 минуты</td>
-                        <td>WS1AVG2</td>
-                        <td>{{data.WS1AVG2}}</td>
-                      </tr>
-                      <tr>
-                        <td>Скорость ветра (м/с) максимальное значение за 2 минуты</td>
-                        <td>WS1MAX2</td>
-                        <td>{{data.WS1MAX2}}</td>
-                      </tr>
-                      <tr>
-                        <td>Направление ветра (град) минимальное значение за 2 минуты</td>
-                        <td>WD1MIN2</td>
-                        <td>{{data.WD1MIN2}}</td>
-                      </tr>
-                      <tr>
-                        <td>Направление ветра (град) среднее значение за 2 минуты</td>
-                        <td>WD1AVG2</td>
-                        <td>{{data.WD1AVG2}}</td>
-                      </tr>
-                      <tr>
-                        <td>Направление ветра (град) максимальное значение за 2 минуты/td>
-                        <td>WD1MAX2</td>
-                        <td>{{data.WD1MAX2}}</td>
-                      </tr>
-                      <tr>
-                        <td>Скорость ветра (м/с) минимальное значение за 10 минут</td>
-                        <td>WS1MIN10</td>
-                        <td>{{data.WS1MIN10}}</td>
-                      </tr>
-                      <tr>
-                        <td>Скорость ветра (м/с) среднее значение за 10 минут</td>
-                        <td>WS1AVG10</td>
-                        <td>{{data.WS1AVG10}}</td>
-                      </tr>
-                        <td>Скорость ветра (м/с) максимальное значение за 2 минуты</td>
-                        <td>WS1MAX10</td>
-                        <td>{{data.WS1MAX10}}</td>
-                      </tr>
-                      <tr>
-                        <td>Направление ветра (град) минимальное значение за 10 минут</td>
-                        <td>WD1MIN10</td>
-                        <td>{{data.WD1MIN10}}</td>
-                      </tr>
-                      <tr>
-                        <td>Направление ветра (град) среднее значение за 10 минут</td>
-                        <td>WD1AVG10</td>
-                        <td>{{data.WD1AVG10}}</td>
-                      </tr>
-                      <tr>
-                        <td>Направление ветра (град) максимальное значение за 10 минут</td>
-                        <td>WD1MAX10</td>
-                        <td>{{data.WD1MAX10}}</td>
-                      </tr>
-                    </tbody>
-                </table>
+            {% if user.is_authenticated %}
+            <p>
+              <a class="btn btn-outline-success" href="{% url 'download-wind-data' %}" role="button">Скачать .csv</a>
+              <a class="btn btn-outline-success" href="{% url 'download-wind-data-xlsx' %}" role="button">Скачать .xlsx</a>
+            </p>
+            <div class="col-6">
+              <form class="row g-3" action="{% url 'wind-data' %}" method="get">
+                <div class="col-auto">
+                  <input type="text" class="form-control" placeholder="Дата с:"name="date_from">
+                </div>
+                <div class="col-auto">
+                  <input type="text" class="form-control" placeholder="Дата по:" name="date_to" aria-describedby="dateInlineHelp">
+                </div>
+                <div class="col-auto">
+                  <button type="submit" class="btn btn-outline-secondary mb-3">Искать</button>
+                </div>
+                <div id="dateInlineHelp" class="form-text">Введите дату в формате "ГГГГ-ММ-ДД". Для поиска по времени введите дату и время в формате "ГГГГ-ММ-ДД ЧЧ:ММ"</div>
+              </form>
+            {% endif %}
+              <br>
+              <table class="table table-hover table-bordered">
+                  <tbody>
+                    <tr>
+                      <th scope="col">id</th>
+                      <th scope="col">date</th>
+                      <th scope="col">WS1AVG</th>
+                      <th scope="col">WD1AVG</th>
+                      <th scope="col">WS1MIN2</th>
+                      <th scope="col">WS1AVG2</th>
+                      <th scope="col">WS1MAX2</th>
+                      <th scope="col">WD1MIN2</th>
+                      <th scope="col">WD1AVG2</th>
+                      <th scope="col">WD1MAX2</th>
+                      <th scope="col">WS1MIN10</th>
+                      <th scope="col">WS1AVG10</th>
+                      <th scope="col">WS1MAX10</th>
+                      <th scope="col">WD1MIN10</th>
+                      <th scope="col">WD1AVG10</th>
+                      <th scope="col">WD1MAX10</th>
+                    </tr>
+                  {% for data in dataset %}
+                    <tr>
+                      <td scope="col">{{ data.id }}</td>
+                      <td scope="col">{{ data.date|date:"d.m.Y H:i:s"}}</td>
+                      <td scope="col">{{data.WS1AVG}}</td>
+                      <td scope="col">{{data.WD1AVG}}</td>
+                      <td scope="col">{{data.WS1MIN2}}</td>
+                      <td scope="col">{{data.WS1AVG2}}</td>
+                      <td scope="col">{{data.WS1MAX2}}</td>
+                      <td scope="col">{{data.WD1MIN2}}</td>
+                      <td scope="col">{{data.WD1AVG2}}</td>
+                      <td scope="col">{{data.WD1MAX2}}</td>
+                      <td scope="col">{{data.WS1MIN10}}</td>
+                      <td scope="col">{{data.WS1AVG10}}</td>
+                      <td scope="col">{{data.WS1MAX10}}</td>
+                      <td scope="col">{{data.WD1MIN10}}</td>
+                      <td scope="col">{{data.WD1AVG10}}</td>
+                      <td scope="col">{{data.WD1MAX10}}</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+              </table>
             </div>
         </div>
     </div>

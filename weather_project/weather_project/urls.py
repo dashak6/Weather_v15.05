@@ -16,6 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+admin.site.site_header = "Данные о погоде"
+admin.site.site_title = "Добро пожаловать. Данные о погоде"
+admin.site.index_title = "Административная панель"
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('meteo/', include('meteo_app.urls'))

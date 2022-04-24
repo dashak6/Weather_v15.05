@@ -1,34 +1,51 @@
-{% extends "meteo_app/base.html" %}
-
-{% block content %}
-    <div class="container">
-        <div class="row">
-            <div class="col-6">
-                <br>
-                <p class="h1">Информация о погоде</p>
-                <br>
-                <h1 class="display-6">Авторизация</h1>
-                {% if message %}
-                    <div class="alert alert-warning" role="alert">
-                        {{ message }}
-                    </div>
-                {% endif %}
-                <form action="{% url 'auth-page' %}" method="post">
-                    {% csrf_token %}
-                    <form>
-                        <div class="mb-3">
-                            <label for="username-field" class="form-label">Имя пользователя</label>
-                            <input type="text" class="form-control" id="username-field" name='username'>
+<DOCTYPE HTML>
+<html lang='en'>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        {% block title %}
+            <title>Данные о погоде</title>
+        {% endblock %}
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-6">
+                    <br>
+                    <p class="h1">Информация о погоде</p>
+                    <br>
+                    <h1 class="display-6">Авторизация</h1>
+                    {% if message %}
+                        <div class="alert alert-warning" role="alert">
+                            {{ message }}
                         </div>
-                        <div class="mb-3">
-                            <label for="password-field" class="form-label">Пароль</label>
-                            <input type="password" class="form-control" id="password-field" name='password'>
-                        </div>
-                        <button type="submit" class="btn btn-outline-primary">Войти</button>
-                        </form>
-                </form>
+                    {% endif %}
+                    <form action="{% url 'auth-page' %}" method="post">
+                        {% csrf_token %}
+                        <form>
+                            <div class="mb-3">
+                                <label for="username-field" class="form-label">Имя пользователя</label>
+                                <input type="text" class="form-control" id="username-field" name='username'>
+                            </div>
+                            <div class="mb-3">
+                                <label for="password-field" class="form-label">Пароль</label>
+                                <input type="password" class="form-control" id="password-field" name='password'>
+                            </div>
+                                <button type="submit" class="btn btn-outline-primary">Войти</button>
+                            </form>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
-{% endblock %}
-        
+        <div class="container">
+            <div class="row">
+                <div class="col-6">
+                    <p><a class="btn btn-outline-primary" href="meteo-data" role="button">Данные с метеостанции</a></p>
+                    <p><a class="btn btn-outline-primary" href="wind-data" role="button" aria-describedby="authInfo">Данные с ветряного модуля</a> </p>
+                    <div id="authInfo" class="form-text">Без авторизации не доступны скачивание или фильтрация данных</div>
+                </div>
+            </div>
+        </div>
+    </body>

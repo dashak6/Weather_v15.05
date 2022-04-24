@@ -1,6 +1,6 @@
 from django.db import models
 
-
+# Данные с метеостанции
 class MeteoData(models.Model):
     date = models.DateTimeField(
         auto_now=False, 
@@ -145,13 +145,13 @@ class MeteoData(models.Model):
     )
     
     def __str__(self):
-        return f'Данные с метеостанции от {self.date.strftime("%d-%m-%Y")}'
+        return f'Данные с метеостанции от {self.date.strftime("%H-%M-%S-%d-%m-%Y")}'
     
     class Meta:
         verbose_name = "Данные с метеостанции"
         verbose_name_plural = "Данные с метеостанции"
 
-
+# Данные с ветряного модуля
 class WindData(models.Model):
     date = models.DateTimeField(
         auto_now=False, 
@@ -269,7 +269,7 @@ class WindData(models.Model):
     )
     
     def __str__(self):
-        return f'Данные с ветряного модуля от {self.date.strftime("%d-%m-%Y")}'
+        return f'Данные с ветряного модуля от {self.date.strftime("%H-%M-%S-%d-%m-%Y")}'
     
     class Meta:
         verbose_name = "Данные с ветряного модуля"

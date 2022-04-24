@@ -23,9 +23,20 @@
                 </div>
             </div>
         </div>
+        {% else %}
+        <div class="container">
+            <div class="row">
+                <div class="col-6">
+                    <br>
+                    <p> 
+                        <a class="btn btn-outline-secondary" href="{% url 'auth-page' %}"role="button">Войти</a>
+                    </p>
+                </div>
+            </div>
+        </div>
         {% endif %}
+        
         {% block content %}
         {% endblock %}
-
     </body>
 </html>
