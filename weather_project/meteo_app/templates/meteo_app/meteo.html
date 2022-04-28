@@ -10,6 +10,11 @@
                 <a class="btn btn-outline-success" href="{% url 'download-meteo-data-xlsx' %}" role="button">Скачать .xlsx</a>
             </p>
             <div class="col-6">
+              {% if message %}
+                <div class="alert alert-warning" role="alert">
+                    {{ message }}
+                </div>
+              {% endif %}
               <form class="row g-3" action="{% url 'meteo-data' %}" method="get">
                 <div class="col-auto">
                   <input type="text" class="form-control" placeholder="Дата с:"name="date_from">
@@ -48,7 +53,7 @@
                     {% for data in dataset %}
                       <tr>
                         <td scope="col">{{ data.id }}</td>
-                        <td scope="col">{{ data.date|date:"d.m.Y H:i:s"}}</td>
+                        <td scope="col">{{ data.date|date:"d.m.Y H:i:s" }}</td>
                         <td scope="col">{{data.TA}}</td>
                         <td scope="col">{{data.DP}}</td>
                         <td scope="col">{{data.WC}}</td>

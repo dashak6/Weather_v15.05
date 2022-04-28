@@ -10,6 +10,11 @@
               <a class="btn btn-outline-success" href="{% url 'download-wind-data-xlsx' %}" role="button">Скачать .xlsx</a>
             </p>
             <div class="col-6">
+              {% if message %}
+                <div class="alert alert-warning" role="alert">
+                    {{ message }}
+                </div>
+              {% endif %}
               <form class="row g-3" action="{% url 'wind-data' %}" method="get">
                 <div class="col-auto">
                   <input type="text" class="form-control" placeholder="Дата с:"name="date_from">

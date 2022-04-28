@@ -5,6 +5,7 @@ from meteo_app.services import model_data_to_csv, model_data_to_xls
 from django.http import FileResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
+from django.core.exceptions import ValidationError
 
 
 def auth_page(request):
@@ -28,6 +29,7 @@ def auth_page(request):
 
 def main(request):
     if request.user.is_authenticated:
+        print(dir(request.GET))
         context = {'user': request.user}
         return render(request, 'meteo_app/main.html', context)
     return redirect('auth-page')
@@ -41,17 +43,25 @@ def logout_view(request):
 def meteo_data(request):
     if request.user.is_authenticated:
         dataset = None
+        message = None
         if "date_from" in request.GET and "date_to" in request.GET:
-            if request.GET["date_from"] and request.GET["date_from"]:
-                start = request.GET["date_from"]
-                end = request.GET["date_to"]
-                dataset = MeteoData.objects.filter(date__range=(start, end))
+            try:
+                if request.GET["date_from"] and request.GET["date_from"]:
+                    start = request.GET["date_from"]
+                    end = request.GET["date_to"]
+                    dataset = MeteoData.objects.filter(date__range=(start, end))
+                    dataset.reverse()[:100]
+            except ValidationError:
+                redirect('meteo-data')
+                
         if not dataset:
             dataset = MeteoData.objects.order_by('id')
             dataset = dataset.reverse()[:10]
+        
         context = {
             'dataset': dataset,
-            'user': request.user
+            'user': request.user,
+            'message': message
         }
         return render(request, 'meteo_app/meteo.html', context)
     else:
@@ -78,17 +88,24 @@ def meteo_data_pk(request, pk):
 def wind_data(request):
     if request.user.is_authenticated:
         dataset = None
-        if "date_from" in request.GET and "date_to" in request.GET:
-            if request.GET["date_from"] and request.GET["date_from"]:
-                start = request.GET["date_from"]
-                end = request.GET["date_to"]
-                dataset = WindData.objects.filter(date__range=(start, end))
+        message = None
+        try:
+            if "date_from" in request.GET and "date_to" in request.GET:
+                if request.GET["date_from"] and request.GET["date_from"]:
+                    start = request.GET["date_from"]
+                    end = request.GET["date_to"]
+                    dataset = WindData.objects.filter(date__range=(start, end))
+        except ValidationError:
+                message = "Данные введены неправильно"
+                redirect('meteo-data')
+        
         if not dataset:
             dataset = WindData.objects.order_by('id')
             dataset = dataset.reverse()[:10]
         context = {
             'dataset': dataset,
-            'user': request.user
+            'user': request.user,
+            'message': message,
         }
         return render(request, 'meteo_app/wind.html', context)
     else:
