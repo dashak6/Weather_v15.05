@@ -1,5 +1,6 @@
 from django.db import models
 
+
 # Данные с метеостанции
 class MeteoData(models.Model):
     date = models.DateTimeField(
@@ -274,3 +275,113 @@ class WindData(models.Model):
     class Meta:
         verbose_name = "Данные с ветряного модуля"
         verbose_name_plural = "Данные с ветряного модуля"
+
+
+# Данные с инвертора
+class Invertor(models.Model):
+    date = models.DateTimeField(
+        auto_now=False,
+        auto_now_add=False,
+        verbose_name="Дата"
+    )
+
+    pv1_input_power = models.CharField(
+        max_length=64,
+        null=True,
+        blank=True,
+        default="0",
+        verbose_name="Входная мощность pv1 (Вт) за 1 сек"
+    )
+
+    pv1_voltage = models.CharField(
+        max_length=64,
+        null=True,
+        blank=True,
+        default="0",
+        verbose_name="Напряжение pv1 (В) за 1 сек"
+    )
+
+    pv1_current = models.CharField(
+        max_length=64,
+        null=True,
+        blank=True,
+        default="0",
+        verbose_name="Ток pv1 (А) за 1 сек"
+    )
+
+    pv2_input_power = models.CharField(
+        max_length=64,
+        null=True,
+        blank=True,
+        default="0",
+        verbose_name="Входная мощность pv2 (Вт) за 1 сек"
+    )
+
+    pv2_voltage = models.CharField(
+        max_length=64,
+        null=True,
+        blank=True,
+        default="0",
+        verbose_name="Напряжение pv2 (В) за 1 сек"
+    )
+    pv2_current = models.CharField(
+        max_length=64,
+        null=True,
+        blank=True,
+        default="0",
+        verbose_name="Ток pv2 (А) за 1 сек"
+    )
+
+    grid_voltage = models.CharField(
+        max_length=64,
+        null=True,
+        blank=True,
+        default="0",
+        verbose_name="Напряжение сети (В) за 1 сек"
+    )
+    grid_current = models.CharField(
+        max_length=64,
+        null=True,
+        blank=True,
+        default="0",
+        verbose_name="Ток сети (А) за 1 сек"
+    )
+
+    grid_frequency = models.CharField(
+        max_length=64,
+        null=True,
+        blank=True,
+        default="0",
+        verbose_name="Частота сети (Гц) за 1 сек"
+    )
+
+    output_power = models.CharField(
+        max_length=64,
+        null=True,
+        blank=True,
+        default="0",
+        verbose_name="Выходная мощность (Вт) за 1 сек"
+    )
+
+    energy_today = models.CharField(
+        max_length=64,
+        null=True,
+        blank=True,
+        default="0",
+        verbose_name="Энергия сегодня (кВт*ч) за 1 сек"
+    )
+
+    energy_total = models.CharField(
+        max_length=64,
+        null=True,
+        blank=True,
+        default="0",
+        verbose_name="Общая энергия (кВт*ч) за 1 сек"
+    )
+
+    def __str__(self):
+        return f'Данные с инвертора от {self.date.strftime("%H-%M-%S-%d-%m-%Y")}'
+
+    class Meta:
+        verbose_name = "Данные с инвертора"
+        verbose_name_plural = "Данные с инвертора"

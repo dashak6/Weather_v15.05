@@ -1,0 +1,74 @@
+{% extends "meteo_app/base.html" %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <h1 class="display-6">Данные с инвертора</h1>
+            {% if user.is_authenticated %}
+            <p>
+                <a class="btn btn-outline-success" href="{% url 'download-invertor-data' %}" role="button">Скачать .csv</a>
+                <a class="btn btn-outline-success" href="{% url 'download-invertor-data-xlsx' %}" role="button">Скачать .xlsx</a>
+            </p>
+            <div class="col-6">
+              {% if message %}
+                <div class="alert alert-warning" role="alert">
+                    {{ message }}
+                </div>
+              {% endif %}
+              <form class="row g-3" action="{% url 'meteo-data' %}" method="get">
+                <div class="col-auto">
+                  <input type="text" class="form-control" placeholder="Дата с:"name="date_from">
+                </div>
+                <div class="col-auto">
+                  <input type="text" class="form-control" placeholder="Дата по:" name="date_to" aria-describedby="dateInlineHelp">
+                </div>
+                <div class="col-auto">
+                  <button type="submit" class="btn btn-outline-secondary mb-3">Искать</button>
+                </div>
+                <div id="dateInlineHelp" class="form-text">Введите дату в формате "ГГГГ-ММ-ДД". Для поиска по времени введите дату и время в формате "ГГГГ-ММ-ДД ЧЧ:ММ"</div>
+              </form>
+              {% endif %}
+              <br>
+                <table class="table table-hover table-bordered">
+                    <tbody>
+                      <tr>
+                        <th scope="col">id</th>
+                        <th scope="col">date</th>
+                        <th scope="col">pv1_input_power(Вт)</th>
+                        <th scope="col">pv1_voltage(В)</th>
+                        <th scope="col">pv1_current(А)</th>
+                        <th scope="col">pv2_input_power(Вт)</th>
+                        <th scope="col">pv2_voltage(В)</th>
+                        <th scope="col">pv2_current(А)</th>
+                        <th scope="col">grid_voltage(В)</th>
+                        <th scope="col">grid_current(А)</th>
+                        <th scope="col">grid_frequency(Гц)</th>
+                        <th scope="col">output_power(Вт)</th>
+                        <th scope="col">energy_today(кВт*ч)</th>
+                        <th scope="col">energy_total(кВт*ч)</th>
+                      </tr>
+                    {% for data in dataset %}
+                      <tr>
+                        <td scope="col">{{ data.id }}</td>
+                        <td scope="col">{{ data.date|date:"d.m.Y H:i:s" }}</td>
+                        <td scope="col">{{data.pv1_input_power}}</td>
+                        <td scope="col">{{data.pv1_voltage}}</td>
+                        <td scope="col">{{data.pv1_current}}</td>
+                        <td scope="col">{{data.pv2_input_power}}</td>
+                        <td scope="col">{{data.pv2_voltage}}</td>
+                        <td scope="col">{{data.pv2_current}}</td>
+                        <td scope="col">{{data.grid_voltage}}</td>
+                        <td scope="col">{{data.grid_current}}</td>
+                        <td scope="col">{{data.grid_frequency}}</td>
+                        <td scope="col">{{data.output_power}}</td>
+                        <td scope="col">{{data.energy_today}}</td>
+                        <td scope="col">{{data.energy_total}}</td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+{% endblock %}

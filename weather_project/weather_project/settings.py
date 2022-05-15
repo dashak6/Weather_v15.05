@@ -82,10 +82,10 @@ DB_SQLITE = {
 DB_POSTGRES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'HOST': '127.0.0.1',
+        'HOST': 'localhost',
         'USER': 'postgres',
         'NAME': 'postgres',
-        'PASSWORD': '123456',
+        'PASSWORD': '123qweasd',
         'PORT': '5432'
     }
 }

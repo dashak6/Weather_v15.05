@@ -1,6 +1,6 @@
 import os
 from weather_project.settings import BASE_DIR
-from meteo_app.models import MeteoData, WindData
+from meteo_app.models import MeteoData, WindData, Invertor
 from meteo_app.services import model_data_to_csv, model_data_to_xls
 from django.http import FileResponse
 from django.shortcuts import render, redirect
@@ -26,6 +26,7 @@ def auth_page(request):
         'message': message
     }
     return render(request, 'meteo_app/auth.html', context)
+
 
 def main(request):
     if request.user.is_authenticated:
@@ -118,6 +119,40 @@ def wind_data(request):
         return render(request, 'meteo_app/wind.html', context)
 
 
+def invertor_data(request):
+    if request.user.is_authenticated:
+        dataset = None
+        message = None
+        if "date_from" in request.GET and "date_to" in request.GET:
+            try:
+                if request.GET["date_from"] and request.GET["date_from"]:
+                    start = request.GET["date_from"]
+                    end = request.GET["date_to"]
+                    dataset = MeteoData.objects.filter(date__range=(start, end))
+                    dataset.reverse()[:100]
+            except ValidationError:
+                redirect('invertor-data')
+
+        if not dataset:
+            dataset = Invertor.objects.order_by('id')
+            dataset = dataset.reverse()[:10]
+
+        context = {
+            'dataset': dataset,
+            'user': request.user,
+            'message': message
+        }
+        return render(request, 'meteo_app/invertor.html', context)
+    else:
+        dataset = MeteoData.objects.order_by('id')
+        dataset = dataset.reverse()[:10]
+        context = {
+            'dataset': dataset,
+            'user': request.user
+        }
+        return render(request, 'meteo_app/invertor.html', context)
+
+
 def download_meteo_data(request):
     if request.user.is_authenticated:
         filepath = os.path.join(str(BASE_DIR)+"/meteo_app/files/meteo.csv")
@@ -158,6 +193,29 @@ def download_wind_data_xlsx(request):
         to_download = open(filepath, 'rb')
         response = FileResponse(to_download, content_type="application/force-download")
         response['Content-Disposition'] = 'attachment; filename="winddata.xlsx"'
+        print(dir(response))
+        return response
+    return redirect('auth-page')
+
+
+def download_invertor_data(request):
+    if request.user.is_authenticated:
+        filepath = os.path.join(str(BASE_DIR)+"/meteo_app/files/invertor.csv")
+        model_data_to_csv(WindData, filepath)
+        to_download = open(filepath, 'rb')
+        response = FileResponse(to_download, content_type="application/force-download")
+        response['Content-Disposition'] = 'attachment; filename="invertordata.csv"'
+        return response
+    return redirect('auth-page')
+
+
+def download_invertor_data_xlsx(request):
+    if request.user.is_authenticated:
+        filepath = os.path.join(str(BASE_DIR)+"/meteo_app/files/invertor.xlsx")
+        model_data_to_xls(WindData, filepath)
+        to_download = open(filepath, 'rb')
+        response = FileResponse(to_download, content_type="application/force-download")
+        response['Content-Disposition'] = 'attachment; filename="invertordata.xlsx"'
         print(dir(response))
         return response
     return redirect('auth-page')
