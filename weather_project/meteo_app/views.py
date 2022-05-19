@@ -6,6 +6,7 @@ from django.http import FileResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.core.exceptions import ValidationError
+from django.core.paginator import Paginator
 
 
 def auth_page(request):
@@ -128,7 +129,7 @@ def invertor_data(request):
                 if request.GET["date_from"] and request.GET["date_from"]:
                     start = request.GET["date_from"]
                     end = request.GET["date_to"]
-                    dataset = MeteoData.objects.filter(date__range=(start, end))
+                    dataset = Invertor.objects.filter(date__range=(start, end))
                     dataset.reverse()[:100]
             except ValidationError:
                 redirect('invertor-data')
@@ -144,7 +145,7 @@ def invertor_data(request):
         }
         return render(request, 'meteo_app/invertor.html', context)
     else:
-        dataset = MeteoData.objects.order_by('id')
+        dataset = Invertor.objects.order_by('id')
         dataset = dataset.reverse()[:10]
         context = {
             'dataset': dataset,
@@ -219,3 +220,12 @@ def download_invertor_data_xlsx(request):
         print(dir(response))
         return response
     return redirect('auth-page')
+
+
+def pag_test(request):
+    dataset = WindData.objects.all()
+    paginator = Paginator(dataset, 100)
+    
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request, 'pagtest.html', {'page_obj': page_obj})

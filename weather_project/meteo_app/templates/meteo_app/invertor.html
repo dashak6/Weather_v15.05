@@ -5,16 +5,16 @@
         <div class="row">
             <h1 class="display-6">Данные с инвертора</h1>
             {% if user.is_authenticated %}
-            <p>
-                <a class="btn btn-outline-success" href="{% url 'download-invertor-data' %}" role="button">Скачать .csv</a>
-                <a class="btn btn-outline-success" href="{% url 'download-invertor-data-xlsx' %}" role="button">Скачать .xlsx</a>
-            </p>
-            <div class="col-6">
-              {% if message %}
-                <div class="alert alert-warning" role="alert">
-                    {{ message }}
-                </div>
-              {% endif %}
+              <p>
+                  <a class="btn btn-outline-success" href="{% url 'download-invertor-data' %}" role="button">Скачать .csv</a>
+                  <a class="btn btn-outline-success" href="{% url 'download-invertor-data-xlsx' %}" role="button">Скачать .xlsx</a>
+              </p>
+              <div class="col-6">
+                {% if message %}
+                  <div class="alert alert-warning" role="alert">
+                      {{ message }}
+                  </div>
+                {% endif %}
               <form class="row g-3" action="{% url 'meteo-data' %}" method="get">
                 <div class="col-auto">
                   <input type="text" class="form-control" placeholder="Дата с:"name="date_from">
@@ -27,7 +27,7 @@
                 </div>
                 <div id="dateInlineHelp" class="form-text">Введите дату в формате "ГГГГ-ММ-ДД". Для поиска по времени введите дату и время в формате "ГГГГ-ММ-ДД ЧЧ:ММ"</div>
               </form>
-              {% endif %}
+            {% endif %}
               <br>
                 <table class="table table-hover table-bordered">
                     <tbody>
@@ -51,18 +51,18 @@
                       <tr>
                         <td scope="col">{{ data.id }}</td>
                         <td scope="col">{{ data.date|date:"d.m.Y H:i:s" }}</td>
-                        <td scope="col">{{data.pv1_input_power}}</td>
-                        <td scope="col">{{data.pv1_voltage}}</td>
-                        <td scope="col">{{data.pv1_current}}</td>
-                        <td scope="col">{{data.pv2_input_power}}</td>
-                        <td scope="col">{{data.pv2_voltage}}</td>
-                        <td scope="col">{{data.pv2_current}}</td>
-                        <td scope="col">{{data.grid_voltage}}</td>
-                        <td scope="col">{{data.grid_current}}</td>
-                        <td scope="col">{{data.grid_frequency}}</td>
-                        <td scope="col">{{data.output_power}}</td>
-                        <td scope="col">{{data.energy_today}}</td>
-                        <td scope="col">{{data.energy_total}}</td>
+                        <td scope="col">{{ data.pv1_input_power }}</td>
+                        <td scope="col">{{ data.pv1_voltage }}</td>
+                        <td scope="col">{{ data.pv1_current }}</td>
+                        <td scope="col">{{ data.pv2_input_power }}</td>
+                        <td scope="col">{{ data.pv2_voltage }}</td>
+                        <td scope="col">{{ data.pv2_current }}</td>
+                        <td scope="col">{{ data.grid_voltage }}</td>
+                        <td scope="col">{{ data.grid_current }}</td>
+                        <td scope="col">{{ data.grid_frequency }}</td>
+                        <td scope="col">{{ data.output_power }}</td>
+                        <td scope="col">{{ data.energy_today }}</td>
+                        <td scope="col">{{ data.energy_total }}</td>
                       </tr>
                       {% endfor %}
                     </tbody>
