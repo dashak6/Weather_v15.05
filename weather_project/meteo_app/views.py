@@ -52,25 +52,36 @@ def meteo_data(request):
                     start = request.GET["date_from"]
                     end = request.GET["date_to"]
                     dataset = MeteoData.objects.filter(date__range=(start, end))
-                    dataset.reverse()[:100]
+                    paginator = Paginator(dataset, 100)
+
+                    page_number = request.GET.get('page')
+                    page_obj = paginator.get_page(page_number)
             except ValidationError:
                 redirect('meteo-data')
                 
         if not dataset:
             dataset = MeteoData.objects.order_by('id')
-            dataset = dataset.reverse()[:10]
+            paginator = Paginator(dataset, 10)
+
+            page_number = request.GET.get('page')
+            page_obj = paginator.get_page(page_number)
         
         context = {
             'dataset': dataset,
+            'page_obj': page_obj,
             'user': request.user,
             'message': message
         }
         return render(request, 'meteo_app/meteo.html', context)
     else:
         dataset = MeteoData.objects.order_by('id')
-        dataset = dataset.reverse()[:10]
+        paginator = Paginator(dataset, 10)
+
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
         context = {
             'dataset': dataset,
+            'page_obj': page_obj,
             'user': request.user
         }
         return render(request, 'meteo_app/meteo.html', context)
@@ -97,24 +108,36 @@ def wind_data(request):
                     start = request.GET["date_from"]
                     end = request.GET["date_to"]
                     dataset = WindData.objects.filter(date__range=(start, end))
+                    paginator = Paginator(dataset, 100)
+
+                    page_number = request.GET.get('page')
+                    page_obj = paginator.get_page(page_number)
         except ValidationError:
                 message = "Данные введены неправильно"
-                redirect('meteo-data')
+                redirect('wind-data')
         
         if not dataset:
             dataset = WindData.objects.order_by('id')
-            dataset = dataset.reverse()[:10]
+            paginator = Paginator(dataset, 10)
+
+            page_number = request.GET.get('page')
+            page_obj = paginator.get_page(page_number)
         context = {
             'dataset': dataset,
+            'page_obj': page_obj,
             'user': request.user,
             'message': message,
         }
         return render(request, 'meteo_app/wind.html', context)
     else:
         dataset = WindData.objects.order_by('id')
-        dataset = dataset.reverse()[:10]
+        paginator = Paginator(dataset, 10)
+
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
         context = {
             'dataset': dataset,
+            'page_obj': page_obj,
             'user': request.user
         }
         return render(request, 'meteo_app/wind.html', context)
@@ -130,25 +153,36 @@ def invertor_data(request):
                     start = request.GET["date_from"]
                     end = request.GET["date_to"]
                     dataset = Invertor.objects.filter(date__range=(start, end))
-                    dataset.reverse()[:100]
+                    paginator = Paginator(dataset, 100)
+
+                    page_number = request.GET.get('page')
+                    page_obj = paginator.get_page(page_number)
             except ValidationError:
                 redirect('invertor-data')
 
         if not dataset:
             dataset = Invertor.objects.order_by('id')
-            dataset = dataset.reverse()[:10]
+            paginator = Paginator(dataset, 10)
+
+            page_number = request.GET.get('page')
+            page_obj = paginator.get_page(page_number)
 
         context = {
             'dataset': dataset,
+            'page_obj': page_obj,
             'user': request.user,
             'message': message
         }
         return render(request, 'meteo_app/invertor.html', context)
     else:
         dataset = Invertor.objects.order_by('id')
-        dataset = dataset.reverse()[:10]
+        paginator = Paginator(dataset, 10)
+
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
         context = {
             'dataset': dataset,
+            'page_obj': page_obj,
             'user': request.user
         }
         return render(request, 'meteo_app/invertor.html', context)

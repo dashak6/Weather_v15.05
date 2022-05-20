@@ -29,6 +29,19 @@
               </form>
               {% endif %}
               <br>
+                <nav aria-label="Page navigation example">
+                     <ul class="pagination">
+                            {% if page_obj.has_previous %}
+                                <li class="page_item"><a class="page-link" href="?page=1">&laquo; first</a></li>
+                                <li class="page_item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">previous</a></li>
+                            {% endif %}
+                            <li class="page_item"><a class="page-link" style="color:black">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</a></li>
+                            {% if page_obj.has_next %}
+                                <li class="page_item"> <a class="page-link" href="?page={{ page_obj.next_page_number }}">next</a> </li>
+                                <li class="page_item"> <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a></li>
+                            {% endif %}
+                    </ul>
+                </nav>
                 <table class="table table-hover table-bordered">
                     <tbody>
                       <tr>
@@ -50,7 +63,7 @@
                         <th scope="col">SD_45_1H</th>
                         <th scope="col">SD_45_1D</th>
                       </tr>
-                    {% for data in dataset %}
+                    {% for data in page_obj %}
                       <tr>
                         <td scope="col">{{ data.id }}</td>
                         <td scope="col">{{ data.date|date:"d.m.Y H:i:s" }}</td>
