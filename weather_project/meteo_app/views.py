@@ -2,11 +2,16 @@ import os
 from weather_project.settings import BASE_DIR
 from meteo_app.models import MeteoData, WindData, Invertor
 from meteo_app.services import model_data_to_csv, model_data_to_xls
+from meteo_app.services import get_page_obj
 from django.http import FileResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator
+
+# TODO: сделать везде функцию get_page_obj вместо явной пагинации
+# TODO:  Удалить из импортов from django.core.paginator import Paginator
 
 
 def auth_page(request):
@@ -29,9 +34,32 @@ def auth_page(request):
     return render(request, 'meteo_app/auth.html', context)
 
 
+def reg_view(request):
+    message = None
+    
+    if request.user.is_authenticated:
+        return redirect('main-page')
+    else:
+        if request.method == "POST":
+            username = request.POST["username"]
+            password = request.POST["password"]
+            password2 = request.POST["password2"]
+            if password == password2:
+                user = User.objects.create_user(username=username, password=password)
+                user.save()
+                return render(request, 'meteo_app/auth.html', {'message': 'Регистрация успешна'})
+            else:
+                message = "Пароли не совпадают"
+    
+    context = {
+        'message': message
+    }
+
+    return render(request, 'meteo_app/reg.html', context)
+            
+    
 def main(request):
     if request.user.is_authenticated:
-        print(dir(request.GET))
         context = {'user': request.user}
         return render(request, 'meteo_app/main.html', context)
     return redirect('auth-page')
@@ -153,41 +181,33 @@ def invertor_data(request):
                     start = request.GET["date_from"]
                     end = request.GET["date_to"]
                     dataset = Invertor.objects.filter(date__range=(start, end))
-                    paginator = Paginator(dataset, 100)
-
-                    page_number = request.GET.get('page')
-                    page_obj = paginator.get_page(page_number)
+                    dataset = get_page_obj(request, Invertor, 100)
             except ValidationError:
                 redirect('invertor-data')
 
         if not dataset:
             dataset = Invertor.objects.order_by('id')
-            paginator = Paginator(dataset, 10)
-
-            page_number = request.GET.get('page')
-            page_obj = paginator.get_page(page_number)
+            dataset = get_page_obj(request, Invertor, 100)
 
         context = {
-            'dataset': dataset,
-            'page_obj': page_obj,
+            'page_obj': dataset,
             'user': request.user,
             'message': message
         }
         return render(request, 'meteo_app/invertor.html', context)
     else:
         dataset = Invertor.objects.order_by('id')
-        paginator = Paginator(dataset, 10)
+        dataset = get_page_obj(request, Invertor, 100)
 
-        page_number = request.GET.get('page')
-        page_obj = paginator.get_page(page_number)
         context = {
-            'dataset': dataset,
-            'page_obj': page_obj,
+            'page_obj': dataset,
             'user': request.user
         }
         return render(request, 'meteo_app/invertor.html', context)
 
 
+
+##### DOWNLOADING VIEWS
 def download_meteo_data(request):
     if request.user.is_authenticated:
         filepath = os.path.join(str(BASE_DIR)+"/meteo_app/files/meteo.csv")
@@ -254,12 +274,3 @@ def download_invertor_data_xlsx(request):
         print(dir(response))
         return response
     return redirect('auth-page')
-
-
-def pag_test(request):
-    dataset = WindData.objects.all()
-    paginator = Paginator(dataset, 100)
-    
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-    return render(request, 'pagtest.html', {'page_obj': page_obj})

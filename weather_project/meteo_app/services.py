@@ -1,5 +1,6 @@
 import csv
 import xlsxwriter 
+from django.core.paginator import Paginator
 
 
 def model_data_to_csv(model, filename):
@@ -36,3 +37,13 @@ def model_data_to_xls(model, filename):
         column = 0
         row += 1
     book.close()
+    
+
+def get_page_obj(request, model, size):
+    dataset = model.objects.all()
+    paginator = Paginator(dataset, size)
+    
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
+    return page_obj

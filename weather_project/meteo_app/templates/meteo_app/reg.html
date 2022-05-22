@@ -1,0 +1,41 @@
+{% extends "meteo_app/base.html" %}
+
+{% block title %}
+    <title>Регистрация</title>
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                <br>
+                <p class="h1">Информация о погоде</p>
+                <br>
+                <h1 class="display-6">Регистрация</h1>
+                {% if message %}
+                    <div class="alert alert-warning" role="alert">
+                        {{ message }}
+                    </div>
+                {% endif %}
+                <form action="{% url 'reg-page' %}" method="post">
+                    {% csrf_token %}
+                    <form>
+                        <div class="mb-3">
+                            <label for="username-field" class="form-label">Имя пользователя</label>
+                            <input type="text" class="form-control" id="username-field" name='username'>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password-field" class="form-label">Пароль</label>
+                            <input type="password" class="form-control" id="password-field" name='password'>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password-field" class="form-label">Повторите пароль</label>
+                            <input type="password" class="form-control" id="password-field" name='password2'>
+                        </div>
+                            <button type="submit" class="btn btn-outline-primary">Зарегистрироваться</button>
+                        </form>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+    

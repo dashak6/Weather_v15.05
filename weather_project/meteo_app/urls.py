@@ -2,8 +2,8 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('pag', views.pag_test, name='pag_test'),
     path('', views.auth_page, name="auth-page"),
+    path('reg', views.reg_view, name="reg-page"),
     path('logout', views.logout_view, name='logout'),
     path('main', views.main, name='main-page'),
     path('meteo-data', views.meteo_data, name='meteo-data'),
