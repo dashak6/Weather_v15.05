@@ -134,4 +134,4 @@ dmypy.json
 /weather_project/weather_project/__pycache__
 /weather_project/meteo_app/__pycache__
 *.DS_Store
-*.idea
+*/.idea
