@@ -11,6 +11,7 @@ class MeteoDataAdmin(admin.ModelAdmin):
 class WindDataAdmin(admin.ModelAdmin):
     date_hierarchy = 'date'
 
+
 @admin.register(Invertor)
 class WindDataAdmin(admin.ModelAdmin):
     date_hierarchy = 'date'
