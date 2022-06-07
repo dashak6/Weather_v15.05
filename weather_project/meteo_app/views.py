@@ -9,10 +9,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
-# TODO: сделать везде функцию get_page_obj вместо явной пагинации
-# TODO:  Удалить из импортов from django.core.paginator import Paginator
-
-
+    
 def auth_page(request):
     message = None
     if request.user.is_authenticated:
@@ -79,14 +76,17 @@ def meteo_data(request):
                     start = request.GET["date_from"]
                     end = request.GET["date_to"]
                     dataset = MeteoData.objects.filter(date__range=(start, end))
-                    dataset = get_page_obj(request, MeteoData, 100)
+                    dataset = get_page_obj(
+                        request=request, model=None, size=100, queryset=dataset)
+                    
             except ValidationError:
                 message = "Данные введены неправильно"
                 redirect('meteo-data')
                 
         if not dataset:
             dataset = MeteoData.objects.order_by('id')
-            dataset = get_page_obj(request, MeteoData, 10)
+            dataset = get_page_obj(
+                request=request, model=MeteoData, size=10)
         
         context = {
             'page_obj': dataset,
@@ -125,7 +125,7 @@ def wind_data(request):
                     start = request.GET["date_from"]
                     end = request.GET["date_to"]
                     dataset = WindData.objects.filter(date__range=(start, end))
-                    dataset = get_page_obj(request, WindData, 100)
+                    #TODO: dataset = get_page_obj(request, WindData, 100)
         except ValidationError:
                 message = "Данные введены неправильно"
                 redirect('wind-data')
@@ -160,7 +160,7 @@ def invertor_data(request):
                     start = request.GET["date_from"]
                     end = request.GET["date_to"]
                     dataset = Invertor.objects.filter(date__range=(start, end))
-                    dataset = get_page_obj(request, Invertor, 100)
+                   #TODO: dataset = get_page_obj(request, Invertor, 100)
             except ValidationError:
                 message = "Данные введены неправильно"
                 redirect('invertor-data')

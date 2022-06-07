@@ -39,8 +39,9 @@ def model_data_to_xls(model, filename):
     book.close()
     
 
-def get_page_obj(request, model, size):
-    dataset = model.objects.all()
+def get_page_obj(request, size=100, model=None, queryset=None):
+    
+    dataset = model.objects.all() if model else queryset
     paginator = Paginator(dataset, size)
     
     page_number = request.GET.get('page')
