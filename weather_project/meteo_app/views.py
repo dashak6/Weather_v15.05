@@ -1,9 +1,9 @@
 import os
 from weather_project.settings import BASE_DIR
 from meteo_app.models import MeteoData, WindData, Invertor
-from meteo_app.services import model_data_to_csv, model_data_to_xls
-from meteo_app.services import get_page_obj
-from django.http import FileResponse
+from meteo_app.services import model_data_to_csv, model_data_to_xls, get_page_obj
+from meteo_app.graph import plot_graphic
+from django.http import FileResponse, HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
@@ -255,6 +255,35 @@ def download_invertor_data_xlsx(request):
         to_download = open(filepath, 'rb')
         response = FileResponse(to_download, content_type="application/force-download")
         response['Content-Disposition'] = 'attachment; filename="invertordata.xlsx"'
-        print(dir(response))
         return response
+    return redirect('auth-page')
+
+
+# GRAPH VIEWS
+def create_meteo_graph(request):
+    if request.user.is_authenticated:
+        dataset = None
+        gr = True
+        message = None
+        if "date_from" in request.GET and "date_to" in request.GET:
+            try:
+                if request.GET["date_from"] and request.GET["date_from"] and request.GET["param"]:
+                    start = request.GET["date_from"]
+                    end = request.GET["date_to"]
+                    param = request.GET["param"]
+                    dataset = MeteoData.objects.filter(date__range=(start, end))
+                    # gr = plot_graphic(
+                    #     queryset=dataset, range=10, param=param)
+
+            except ValidationError:
+                message = "Данные введены неправильно"
+                redirect('meteo-data')
+        
+        context = {
+            'message': message,
+            'user': request.user,
+            'data': dataset,
+            'graph': gr
+        }
+        return render(request, 'meteo_app/meteo_graph.html', context)
     return redirect('auth-page')

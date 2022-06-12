@@ -16,4 +16,5 @@ urlpatterns = [
     path('download/wind-data-xlsx', views.download_wind_data_xlsx, name='download-wind-data-xlsx'),
     path('download/invertor-data', views.download_invertor_data, name='download-invertor-data'),
     path('download/invertor-data-xlsx', views.download_invertor_data_xlsx, name='download-invertor-data-xlsx'),
+    path('meteo-data/graph', views.create_meteo_graph, name='meteo-data-graph'),
 ]

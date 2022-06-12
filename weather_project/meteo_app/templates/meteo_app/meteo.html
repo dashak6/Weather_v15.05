@@ -8,6 +8,7 @@
             <p>
                 <a class="btn btn-outline-success" href="{% url 'download-meteo-data' %}" role="button">Скачать .csv</a>
                 <a class="btn btn-outline-success" href="{% url 'download-meteo-data-xlsx' %}" role="button">Скачать .xlsx</a>
+                <a class="btn btn-outline-success" href="{% url 'meteo-data-graph' %}" role="button">График</a>
             </p>
             <div class="col-6">
               {% if message %}

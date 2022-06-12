@@ -15,6 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from weather_project import settings
+from django.conf.urls.static import static
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 admin.site.site_header = "Данные о погоде"
 admin.site.site_title = "Добро пожаловать. Данные о погоде"
@@ -24,3 +27,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('meteo/', include('meteo_app.urls'))
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += staticfiles_urlpatterns()

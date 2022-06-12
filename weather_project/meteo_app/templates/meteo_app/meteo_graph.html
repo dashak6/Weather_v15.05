@@ -1,0 +1,28 @@
+{% extends "meteo_app/base.html" %}
+{% load static %}
+
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <form class="row g-3" action="{% url 'meteo-data-graph' %}" method="get">
+            <div class="col-auto">
+              <input type="text" class="form-control" placeholder="Дата с:"name="date_from">
+            </div>
+            <div class="col-auto">
+              <input type="text" class="form-control" placeholder="Дата по:" name="date_to" aria-describedby="dateInlineHelp">
+            </div>
+            <div class="col-auto">
+                <input type="text" class="form-control" placeholder="Параметр" name="param" aria-describedby="paramInlineHelp">
+              </div>
+            <div class="col-auto">
+              <button type="submit" class="btn btn-outline-secondary mb-3">Построить график</button>
+            </div>
+            <div id="dateInlineHelp" class="form-text">Введите дату в формате "ГГГГ-ММ-ДД". Для поиска по времени введите дату и время в формате "ГГГГ-ММ-ДД ЧЧ:ММ"</div>
+            <div id="paramInlineHelp" class="form-text">Введите параметр из таблицы</div>
+        </form>
+    
+        <img src="{% static 'media/1.jpeg' %}" alt="my_image">
+    </div>
+</div>
+{% endblock %}
