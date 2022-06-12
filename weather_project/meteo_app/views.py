@@ -86,7 +86,7 @@ def meteo_data(request):
         if not dataset:
             dataset = MeteoData.objects.order_by('id')
             dataset = get_page_obj(
-                request=request, model=MeteoData, size=10)
+                request=request, model=MeteoData, size=10, queryset=dataset)
         
         context = {
             'page_obj': dataset,
@@ -96,7 +96,8 @@ def meteo_data(request):
         return render(request, 'meteo_app/meteo.html', context)
     else:
         dataset = MeteoData.objects.order_by('id')
-        dataset = get_page_obj(request, MeteoData, 10)
+        dataset = get_page_obj(
+            request=request, model=MeteoData, size=10, queryset=dataset)
         context = {
             'page_obj': dataset,
             'user': request.user
@@ -125,14 +126,16 @@ def wind_data(request):
                     start = request.GET["date_from"]
                     end = request.GET["date_to"]
                     dataset = WindData.objects.filter(date__range=(start, end))
-                    #TODO: dataset = get_page_obj(request, WindData, 100)
+                    dataset = get_page_obj(
+                        request=request, model=None, size=100, queryset=dataset)
+
         except ValidationError:
                 message = "Данные введены неправильно"
                 redirect('wind-data')
         
         if not dataset:
             dataset = WindData.objects.order_by('id')
-            dataset = get_page_obj(request, WindData, 10)
+            dataset = get_page_obj(request=request, model=WindData, size=10, queryset=dataset)
 
         context = {
             'page_obj': dataset,
@@ -142,7 +145,7 @@ def wind_data(request):
         return render(request, 'meteo_app/wind.html', context)
     else:
         dataset = WindData.objects.order_by('id')
-        dataset = get_page_obj(request, WindData, 10)
+        dataset = get_page_obj(request=request, model=WindData, size=10, queryset=dataset)
         context = {
             'page_obj': dataset,
             'user': request.user
@@ -160,14 +163,16 @@ def invertor_data(request):
                     start = request.GET["date_from"]
                     end = request.GET["date_to"]
                     dataset = Invertor.objects.filter(date__range=(start, end))
-                   #TODO: dataset = get_page_obj(request, Invertor, 100)
+                    dataset = get_page_obj(
+                        request=request, model=None, size=100, queryset=dataset)
+
             except ValidationError:
                 message = "Данные введены неправильно"
                 redirect('invertor-data')
 
         if not dataset:
             dataset = Invertor.objects.order_by('id')
-            dataset = get_page_obj(request, Invertor, 100)
+            dataset = get_page_obj(request=request, model=Invertor, size=10, queryset=dataset)
 
         context = {
             'page_obj': dataset,
@@ -177,7 +182,7 @@ def invertor_data(request):
         return render(request, 'meteo_app/invertor.html', context)
     else:
         dataset = Invertor.objects.order_by('id')
-        dataset = get_page_obj(request, Invertor, 100)
+        dataset = get_page_obj(request=request, model=Invertor, size=10, queryset=dataset)
 
         context = {
             'page_obj': dataset,
