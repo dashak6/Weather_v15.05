@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="container">
-    <div class="col-12">
+    <div class=col-12">
         <form class="row g-3" action="{% url 'meteo-data-graph' %}" method="get">
             <div class="col-auto">
               <input type="text" class="form-control" placeholder="Дата с:"name="date_from">
@@ -23,7 +23,7 @@
         </form>
         <br>
         <p>
-            <a class="btn btn-outline-secondary" href="{% url 'meteo-data' %}"role="button">Вернуться </a>
+            <a class="btn btn-outline-secondary" href="{% url 'wind-data' %}"role="button">Вернуться </a>
         </p>
         <img src="{% static 'media/1.jpeg' %}" alt="my_image">
     </div>

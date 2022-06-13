@@ -287,3 +287,62 @@ def create_meteo_graph(request):
         }
         return render(request, 'meteo_app/meteo_graph.html', context)
     return redirect('auth-page')
+
+
+def create_wind_graph(request):
+    if request.user.is_authenticated:
+        dataset = None
+        gr = True
+        message = None
+        if "date_from" in request.GET and "date_to" in request.GET:
+            try:
+                if request.GET["date_from"] and request.GET["date_from"] and request.GET["param"]:
+                    start = request.GET["date_from"]
+                    end = request.GET["date_to"]
+                    param = request.GET["param"]
+                    dataset = WindData.objects.filter(date__range=(start, end))
+                    # gr = plot_graphic(
+                    #     queryset=dataset, range=10, param=param)
+
+            except ValidationError:
+                message = "Данные введены неправильно"
+                redirect('wind-data')
+
+        context = {
+            'message': message,
+            'user': request.user,
+            'data': dataset,
+            'graph': gr
+        }
+        return render(request, 'meteo_app/wind_graph.html', context)
+    return redirect('auth-page')
+
+
+def create_invertor_graph(request):
+    if request.user.is_authenticated:
+        dataset = None
+        gr = True
+        message = None
+        if "date_from" in request.GET and "date_to" in request.GET:
+            try:
+                if request.GET["date_from"] and request.GET["date_from"] and request.GET["param"]:
+                    start = request.GET["date_from"]
+                    end = request.GET["date_to"]
+                    param = request.GET["param"]
+                    dataset = Invertor.objects.filter(date__range=(start, end))
+                    # gr = plot_graphic(
+                    #     queryset=dataset, range=10, param=param)
+
+            except ValidationError:
+                message = "Данные введены неправильно"
+                redirect('invertor-data')
+
+        context = {
+            'message': message,
+            'user': request.user,
+            'data': dataset,
+            'graph': gr
+        }
+        return render(request, 'meteo_app/invertor_graph.html', context)
+    return redirect('auth-page')
+
