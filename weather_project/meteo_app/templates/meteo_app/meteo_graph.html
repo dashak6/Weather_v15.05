@@ -1,5 +1,5 @@
 {% extends "meteo_app/base.html" %}
-{% load static %}
+
 
 
 {% block content %}
@@ -13,8 +13,16 @@
               <input type="text" class="form-control" placeholder="Дата по:" name="date_to" aria-describedby="dateInlineHelp">
             </div>
             <div class="col-auto">
-                <input type="text" class="form-control" placeholder="Параметр" name="param" aria-describedby="paramInlineHelp">
+                <input type="text" class="form-control" placeholder="Параметр" name="param" aria-describedby="paramInlineHelp"><br>
               </div>
+            <div class="col-auto">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="1" name="seconds" id="flexCheckChecked" unchecked>
+                <label class="form-check-label" for="flexCheckChecked">
+                  Отобразить посекундно
+                </label>
+              </div>
+            </div>
             <div class="col-auto">
               <button type="submit" class="btn btn-outline-secondary mb-3">Построить график</button>
             </div>
@@ -25,7 +33,10 @@
         <p>
             <a class="btn btn-outline-secondary" href="{% url 'meteo-data' %}"role="button">Вернуться </a>
         </p>
-        <img src="{% static 'media/1.jpeg' %}" alt="my_image">
+        {% if graph %}
+          {% load static %}
+          <img src="{% static 'meteo_app/graph.png' %}" alt="my_image" />
+        {% endif %}
     </div>
 </div>
 {% endblock %}
