@@ -1,6 +1,6 @@
 import matplotlib
 import matplotlib.pyplot as plt
-from meteo_app.models import MeteoData
+from meteo_app.models import MeteoData, WindData, Invertor
 
 def plot_graphic(queryset=None, range=1, param=None, seconds=False):
     if queryset:
@@ -23,8 +23,7 @@ def plot_graphic(queryset=None, range=1, param=None, seconds=False):
             for ax, ay in xy.items():
                 x.append(ax)
                 y.append(ay)
-            
-                
+
             
         matplotlib.use('Agg')
         fig = plt.figure()
@@ -55,3 +54,4 @@ def plot_graphic(queryset=None, range=1, param=None, seconds=False):
         return True
     else:
         return False
+

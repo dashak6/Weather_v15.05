@@ -295,7 +295,7 @@ def create_meteo_graph(request):
 def create_wind_graph(request):
     if request.user.is_authenticated:
         dataset = None
-        gr = True
+        gr = False
         message = None
         if "date_from" in request.GET and "date_to" in request.GET:
             try:
@@ -303,9 +303,11 @@ def create_wind_graph(request):
                     start = request.GET["date_from"]
                     end = request.GET["date_to"]
                     param = request.GET["param"]
+                    seconds = 1 if 'seconds' in request.GET.keys() else 0
+
                     dataset = WindData.objects.filter(date__range=(start, end))
-                    # gr = plot_graphic(
-                    #     queryset=dataset, range=10, param=param)
+                    gr = plot_graphic(
+                        queryset=dataset, range=1, param=param, seconds=seconds)
 
             except ValidationError:
                 message = "Данные введены неправильно"
@@ -324,7 +326,7 @@ def create_wind_graph(request):
 def create_invertor_graph(request):
     if request.user.is_authenticated:
         dataset = None
-        gr = True
+        gr = False
         message = None
         if "date_from" in request.GET and "date_to" in request.GET:
             try:
@@ -332,9 +334,11 @@ def create_invertor_graph(request):
                     start = request.GET["date_from"]
                     end = request.GET["date_to"]
                     param = request.GET["param"]
+                    seconds = 1 if 'seconds' in request.GET.keys() else 0
+
                     dataset = Invertor.objects.filter(date__range=(start, end))
-                    # gr = plot_graphic(
-                    #     queryset=dataset, range=10, param=param)
+                    gr = plot_graphic(
+                        queryset=dataset, range=1, param=param, seconds=seconds)
 
             except ValidationError:
                 message = "Данные введены неправильно"
