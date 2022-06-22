@@ -4,14 +4,10 @@
     <title>Регистрация</title>
 {% endblock %}
 {% block content %}
-    <div class="container">
-        <div class="row">
-            <div class="col-6">
-                <br>
-                <p class="h1">Информация о погоде</p>
-                <br>
-                <h1 class="display-6">Регистрация</h1>
-                {% if message %}
+    <div class="position-relative overflow-hidden p-3 p-md-3 m-md-3">
+        <div class="col-md-5 p-lg-3 mx-auto my-5">
+          <h1 class="display-4 fw-normal header-text text-dan-title text-center">Регистрация</h1>
+          {% if message %}
                     <div class="alert alert-warning" role="alert">
                         {{ message }}
                     </div>
@@ -20,22 +16,25 @@
                     {% csrf_token %}
                     <form>
                         <div class="mb-3">
-                            <label for="username-field" class="form-label">Имя пользователя</label>
+                            <label for="username-field" class="form-label header-text">Имя пользователя</label>
                             <input type="text" class="form-control" id="username-field" name='username'>
                         </div>
                         <div class="mb-3">
-                            <label for="password-field" class="form-label">Пароль</label>
-                            <input type="password" class="form-control" id="password-field" name='password'>
+                            <label for="password" class="form-label header-text">Пароль</label>
+                            <input type="password" class="form-control" id="password" name='password'>
                         </div>
                         <div class="mb-3">
-                            <label for="password-field" class="form-label">Повторите пароль</label>
-                            <input type="password" class="form-control" id="password-field" name='password2'>
+                            <label for="password2" class="form-label header-text">Повторите пароль</label>
+                            <input type="password" class="form-control" id="password2" name='password2'>
                         </div>
-                            <button type="submit" class="btn btn-outline-primary">Зарегистрироваться</button>
+                            <button type="submit" class="btn btn-outline-dark btn-in me-2">Зарегистрироваться</button>
                         </form>
                 </form>
-            </div>
-        </div>
+          </div>
+        <div class="product-device shadow-sm d-none d-md-block"> </div>
+        <div class="product-device product-device-2 shadow-sm d-none d-md-block"> </div>
+        <div class="product-device product-device-3 shadow-sm d-none d-md-block"> </div>
     </div>
-    {% endblock %}
+
+{% endblock %}
     

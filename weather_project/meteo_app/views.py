@@ -1,3 +1,12 @@
+# Выпускная работа бакалавра
+# студентки группы А-12-18
+# Красавиной Дарьи Дмитриевны
+
+# Листинг модуля "views.py" приложения "myapp", класса "ProjectData"
+
+# ==========
+
+# Импортируемые модули
 import os
 from weather_project.settings import BASE_DIR
 from meteo_app.models import MeteoData, WindData, Invertor
@@ -58,12 +67,22 @@ def main(request):
     if request.user.is_authenticated:
         context = {'user': request.user}
         return render(request, 'meteo_app/main.html', context)
-    return redirect('auth-page')
+    return redirect('main-logout')
+
+
+def main_logout(request):
+    return render(request, 'meteo_app/main.html')
 
 
 def logout_view(request):
     logout(request)
-    return redirect('auth-page')
+    return redirect('main-page')
+
+
+def info_view(request):
+    # render function takes argument  - request
+    # and return HTML as response
+    return render(request, "meteo_app/info.html")
 
 
 def meteo_data(request):

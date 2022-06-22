@@ -5,11 +5,53 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+        {% load static %}
+        <link href="{% static 'styles/style.css' %}" rel="stylesheet" type="text/css">
+
         {% block title %}
             <title>Данные о погоде</title>
         {% endblock %}
     </head>
     <body>
+        <header class="p-4 bg-header-my">
+            <div class="container">
+              <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                {% load static %}
+                  <img src="{% static 'meteo_app/logompei.png' %}" width="120" height="120" class="img-fluid" alt="Logo" />
+
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                  <li><a class="nav-link px-2 text-secondary" href="#">         </a></li>
+                  <li><a class="nav-link px-2 text-dan" href="{% url 'main-page' %}">Главная</a></li>
+                  <li><a class="nav-link px-2 header-text" href="{% url 'meteo-data' %}">Данные с метеостанции</a></li>
+                  <li><a class="nav-link px-2 header-text" href="{% url 'wind-data' %}">Данные с ветряного модуля</a></li>
+                  <li><a class="nav-link px-2 header-text" href="{% url 'invertor-data' %}">Данные с инвертора</a></li>
+                  <li><a class="nav-link px-2 header-text" href="{% url 'info-page' %}">Информация</a></li>
+                </ul>
+                {% if user.is_authenticated %}
+                  <!--ul class="nav nav-pills">
+                    <li class="nav-item"><a class="btn btn-outline-dark me-2" href="logout" role="button">Выход</a></li>
+                    <li class="nav-item">Текущий пользователь: {{ user.first_name }}</li>
+                  </ul-->
+                <div class="text-end">
+                    <p>
+                    <p><span class="text-dan">Текущий пользователь: {{ user.first_name }}</span></p>
+                        <a class="btn btn-outline btn-out me-2" href="{% url 'logout' %}" role="button">Выход</a>
+                        <a class="btn btn-outline btn-main me-2" href="{% url 'main-page' %}" role="button">Главное меню</a>
+                    </p>
+                </div>
+                {% else %}
+                <div class="text-end">
+                    <p>
+                        <a class="btn btn-outline-dark btn-in me-2" href="{% url 'auth-page' %}" role="button">Войти</a>
+                        <a class="btn btn-outline-primary btn-reg me-2" href="{% url 'reg-page' %}" role="button">Регистрация</a>
+                    </p>
+                </div>
+                {% endif %}
+              </div>
+            </div>
+        </header>
+<!--
         {% if user.is_authenticated %}
         <div class="container">
             <div class="row">
@@ -35,10 +77,47 @@
                 </div>
             </div>
         </div>
-        {% endif %}
-        
+        {% endif %} -->
+
         {% block content %}
         {% endblock %}
 
+        <footer class="footer mt-5 py-4 bg-footer-my text-dark" style=" {bottom: 0; width: 100%;}">
+            <diV class="container">
+                <div class="row">
+                  <div class="col-12 col-md-12 mb-3">
+                    <h5 class="title-h1">Портал для предоставления данных с метеокомплекса МЭИ</h5>
+                    <ul class="nav flex-column">
+                      <li class="nav-item mb-2"><a href="{% url 'main-page' %}" class="nav-link p-0 text-dan">Главная</a></li>
+                      <li class="nav-item mb-2"><a href="{% url 'meteo-data' %}" class="nav-link p-0 text-dan">Данные с метеостанции</a></li>
+                      <li class="nav-item mb-2"><a href="{% url 'wind-data' %}" class="nav-link p-0 text-dan">Данные с ветряного модуля</a></li>
+                      <li class="nav-item mb-2"><a href="{% url 'invertor-data' %}" class="nav-link p-0 text-dan">Данные с инвертора</a></li>
+                      <li class="nav-item mb-2"><a href="{% url 'info-page' %}" class="nav-link p-0 text-dan">Информация</a></li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="d-flex flex-column flex-sm-row justify-content-between py-2 my-2 border-my">
+                    <ul class="list-unstyled small">
+                      <li class="mb-0 header-text-secondary" style="font-size: 0.8rem">© 2022 НИУ МЭИ, кафедра ВМСС</li>
+                      <li class="mb-0 header-text-secondary" style="font-size: 0.8rem">Красавина Дарья</li>
+                    </ul>
+                    <ul class="list-unstyled d-flex">
+                        <li class="ms-3">{% load static %}
+                          <img src="{% static 'meteo_app/ivti.png' %}" width="70" height="70" class="img-fluid" alt="Logo" /></li>
+                        <li class="ms-3">{% load static %}
+                          <img src="{% static 'meteo_app/igvie.png' %}" width="75" height="75" class="img-fluid" alt="Logo" /></li>
+                    </ul>
+
+                </div>
+            </diV>
+        </footer>
+
     </body>
+    {% block javascript %}
+        <script src="https://code.jscharting.com/2.9.0/jscharting.js"></script>
+
+    {% load static %}
+        <script src="{% static 'meteo_app/index.js' %}"></script>
+    {% endblock %}
 </html>

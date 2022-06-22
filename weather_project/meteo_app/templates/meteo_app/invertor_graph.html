@@ -3,52 +3,60 @@
 
 
 {% block content %}
-<div class="container">
+<div class="container mt-5 mb-2">
     <div class="col-12">
-        <form class="row g-3" action="{% url 'invertor-data-graph' %}" method="get">
-            <br>
-            <div id="dateInlineHelp" class="form-text">Введите дату в формате "ГГГГ-ММ-ДД". Для поиска по времени введите дату и время в формате "ГГГГ-ММ-ДД ЧЧ:ММ"</div>
-            <div id="paramInlineHelp" class="form-text">Введите параметр из таблицы</div>
-            <div class="col-auto">
-              <input type="text" class="form-control" placeholder="Дата с:"name="date_from">
+        <h1 class="display-5 fw-normal header-text text-dan-title text-center my-5">График параметров с инвертора</h1>
+        <main role="main" class="container">
+          <div class="jumbotron">
+            <div id="meteoInlineHelp" class="form-text col-auto">
+                <div class="fw-bold header-text-secondary">Вы можете построить графики по следующим параметрам:</div>
+                <div class="header-text-secondary">TA - среднее значение температуры за 1 минуту  (°C)</div>
+                <div class="header-text-secondary">DP - точка росы  (°C)</div>
+                <div class="header-text-secondary">WC - охлаждение ветром (°C)</div>
+                <div class="header-text-secondary">RH - относительная влажность (%)</div>
+                <div class="header-text-secondary">PA - атмосферное давление (mm Hg)</div>
+                <div class="header-text-secondary">PR - Количество жидких осадков мгновенное значение (мм)</div>
+                <div class="header-text-secondary">PR1H - Количество жидких осадков сумма за 1 час (мм)</div>
+                <div class="header-text-secondary">PR24h - Количество жидких осадков сумма за сутки (мм)</div>
+                <div class="header-text-secondary">SR_1M - Данные от CMP6 установленного параллельно относительно поверхности земли (Вт/м²) среднее значение за 1 минуту</div>
+                <div class="header-text-secondary">SR_1D - Данные от CMP6 установленного параллельно относительно поверхности земли (Вт/м²) среднее значение за 24 часа</div>
+                <div class="header-text-secondary">SR_45_1M - Данные от CMP6 установленного 45 градусов относительно поверхности земли (Вт/м²) среднее значение за 1 минуту</div>
+                <div class="header-text-secondary">SR_45_1D - Данные от CMP6 установленного 45 градусов относительно поверхности земли (Вт/м²) среднее значение за 24 часа</div>
+                <div class="header-text-secondary">SD_1H - Данные от CMP6 установленного 45 градусов относительно поверхности земли (Вт/м²) суммарное значение за 1 час</div>
+                <div class="header-text-secondary">SD_1D - Данные от CMP6 установленного 45 градусов относительно поверхности земли (Вт/м²) суммарное значение за 24 часа</div>
+                <div class="header-text-secondary">SD_45_1H - Данные от CMP6 установленного 45 градусов относительно поверхности земли (Вт/м²) суммарное значение за 1 час</div>
+                <div class="header-text-secondary">SD_45_1D - Данные от CMP6 установленного 45 градусов относительно поверхности земли (Вт/м²) суммарное значение за 24 часа</div>
             </div>
-            <div class="col-auto">
-              <input type="text" class="form-control" placeholder="Дата по:" name="date_to" aria-describedby="dateInlineHelp">
-            </div>
-            <div class="col-auto">
-                <input type="text" class="form-control" placeholder="Параметр" name="param" aria-describedby="paramInlineHelp">
-            </div>
-            <div class="col-auto">
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="1" name="seconds" id="flexCheckChecked" unchecked>
-                <label class="form-check-label" for="flexCheckChecked">
-                  Отобразить посекундно
-                </label>
-              </div>
-            </div>
-            <div class="col-auto">
-              <button type="submit" class="btn btn-outline-secondary mb-3">Построить график</button>
-            </div>
-            <div id="windInlineHelp" class="form-text col-auto text-nowrap bg-light border" style="width: 26rem;">
-                <div>Вы можете построить графики по следующим параметрам:</div>
-                <div>pv1_input_power - Входная мощность pv1 (Вт) за 1 сек</div>
-                <div>pv1_voltage - Напряжение pv1 (В) за 1 сек</div>
-                <div>pv1_current - Ток pv1 (А) за 1 сек</div>
-                <div>pv2_input_power - Входная мощность pv2 (Вт) за 1 сек</div>
-                <div>pv2_voltage - Напряжение pv2 (В) за 1 сек</div>
-                <div>pv2_current - Ток pv2 (А) за 1 сек</div>
-                <div>grid_voltage - Напряжение сети (В) за 1 сек</div>
-                <div>grid_current - Ток сети (А) за 1 сек</div>
-                <div>grid_frequency - Частота сети (Гц) за 1 сек</div>
-                <div>output_power - Выходная мощность (Вт) за 1 сек</div>
-                <div>energy_today - Энергия сегодня (кВт*ч) за 1 сек</div>
-                <div>energy_total - Общая энергия (кВт*ч) за 1 сек</div>
-            </div>
-        </form>
-        <br>
-        <p>
-            <a class="btn btn-outline-secondary" href="{% url 'invertor-data' %}"role="button">Вернуться </a>
-        </p>
+          </div>
+        </main>
+        <div id="dateInlineHelp" class="form-text header-text">Введите дату в формате "ГГГГ-ММ-ДД". Для поиска по времени введите дату и время в формате "ГГГГ-ММ-ДД ЧЧ:ММ"</div>
+
+        <div class="col-6 mt-3">
+            <form class="row g-3" action="{% url 'invertor-data-graph' %}" method="get">
+                <div class="col-auto">
+                  <input type="text" class="form-control" placeholder="Дата с:"name="date_from">
+                </div>
+                <div class="col-auto">
+                  <input type="text" class="form-control" placeholder="Дата по:" name="date_to" aria-describedby="dateInlineHelp">
+                </div>
+                <div id="paramInlineHelp" class="mt-3 form-text header-text">Введите параметр из таблицы:</div>
+                <div class="col-auto">
+                    <input type="text" class="form-control" placeholder="Параметр" name="param" aria-describedby="paramInlineHelp">
+                </div>
+                <div class="col-auto">
+                  <div class="form-check mt-2">
+                    <input class="form-check-input" type="checkbox" value="1" name="seconds" id="flexCheckChecked" unchecked>
+                    <p><label class="form-check-label header-text" for="flexCheckChecked">
+                      Отобразить график посекундно
+                    </label></p>
+                  </div>
+                </div>
+                <div class="col-auto">
+                  <button type="submit" class="btn btn-outline-secondary btn-in mb-3">Построить график</button>
+                </div>
+            </form>
+        </div>
+
         {% if graph %}
           {% load static %}
           <img src="{% static 'meteo_app/graph.png' %}" alt="my_image" />

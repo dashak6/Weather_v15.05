@@ -1,14 +1,14 @@
 {% extends "meteo_app/base.html" %}
 
 {% block content %}
-    <div class="container">
+    <div class="container mt-2">
         <div class="row">
-            <h1 class="display-6">Метеорологические данные</h1>
+            <h1 class="display-4 fw-normal header-text text-dan-title text-center my-5">Метеорологические данные</h1>
             {% if user.is_authenticated %}
             <p>
-                <a class="btn btn-outline-success" href="{% url 'download-meteo-data' %}" role="button">Скачать .csv</a>
-                <a class="btn btn-outline-success" href="{% url 'download-meteo-data-xlsx' %}" role="button">Скачать .xlsx</a>
-                <a class="btn btn-outline-success" href="{% url 'meteo-data-graph' %}" role="button">График</a>
+                <a class="btn btn-outline-dark btn-out me-2" href="{% url 'download-meteo-data' %}" role="button">Скачать .csv</a>
+                <a class="btn btn-outline-dark btn-out me-2" href="{% url 'download-meteo-data-xlsx' %}" role="button">Скачать .xlsx</a>
+                <a class="btn btn-outline-dark btn-out me-2" href="{% url 'meteo-data-graph' %}" role="button">График</a>
             </p>
             <div class="col-6">
               {% if message %}
@@ -18,32 +18,32 @@
               {% endif %}
               <form class="row g-3" action="{% url 'meteo-data' %}" method="get">
                 <div class="col-auto">
-                  <input type="text" class="form-control" placeholder="Дата с:"name="date_from">
+                  <input type="text" class="form-control input-text" placeholder="Дата с:"name="date_from">
                 </div>
                 <div class="col-auto">
-                  <input type="text" class="form-control" placeholder="Дата по:" name="date_to" aria-describedby="dateInlineHelp">
+                  <input type="text" class="form-control input-text" placeholder="Дата по:" name="date_to" aria-describedby="dateInlineHelp">
                 </div>
                 <div class="col-auto">
-                  <button type="submit" class="btn btn-outline-secondary mb-3">Искать</button>
+                  <button type="submit" class="btn btn-outline-secondary btn-in mb-3">Искать</button>
                 </div>
-                <div id="dateInlineHelp" class="form-text">Введите дату в формате "ГГГГ-ММ-ДД". Для поиска по времени введите дату и время в формате "ГГГГ-ММ-ДД ЧЧ:ММ"</div>
+                <div id="dateInlineHelp" class="pb-3 pt-3 form-text text-help">Введите дату в формате "ГГГГ-ММ-ДД". Для поиска по времени введите дату и время в формате "ГГГГ-ММ-ДД ЧЧ:ММ"</div>
               </form>
               {% endif %}
               <br>
                 <nav aria-label="Page navigation example">
                      <ul class="pagination">
                             {% if page_obj.has_previous %}
-                                <li class="page_item"><a class="page-link" href="?page=1">&laquo; first</a></li>
-                                <li class="page_item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">previous</a></li>
+                                <li class="page_item"><a class="page-link text-help" href="?page=1">&laquo; first</a></li>
+                                <li class="page_item"><a class="page-link text-help" href="?page={{ page_obj.previous_page_number }}">previous</a></li>
                             {% endif %}
-                            <li class="page_item"><a class="page-link" style="color:black">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</a></li>
+                            <li class="page_item"><a class="page-link header-text" style="color:black">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</a></li>
                             {% if page_obj.has_next %}
-                                <li class="page_item"> <a class="page-link" href="?page={{ page_obj.next_page_number }}">next</a> </li>
-                                <li class="page_item"> <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a></li>
+                                <li class="page_item"> <a class="page-link text-help" href="?page={{ page_obj.next_page_number }}">next</a> </li>
+                                <li class="page_item"> <a class="page-link text-help" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a></li>
                             {% endif %}
                     </ul>
                 </nav>
-                <table class="table table-hover table-success table-bordered">
+                <table class="table table-hover table-meteo">
                     <tbody>
                       <tr>
                         <th scope="col">id</th>

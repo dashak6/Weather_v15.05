@@ -1,0 +1,212 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&family=Rubik&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
+.header-text {
+    color: #000051;
+}
+.header-text-secondary {
+    color: #283593;
+}
+.title-h1 {
+    color: #000051;
+}
+.bg-header-my {
+    background: linear-gradient(#d1d9ff, #ffffff);
+}
+.bg-footer-my {
+    background: linear-gradient(#ffffff, #d1d9ff);
+}
+.btn-in {
+    background-color: #1a237e;
+    border-color: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+.btn-reg {
+    /*background-color: #1a237e;*/
+    border-color: #000051;
+    color: #000051;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+.border-my {
+    border-top-style: dotted;
+    border-color: #283593;
+}
+
+.btn-out {
+    /*background-color: #1a237e;*/
+    border-color: #000051;
+    color: #000051;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+.btn-main {
+    background-color: #1a237e;
+    border-color: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+.text-dan {
+    color: #ad1457;
+}
+.product-device {
+    position: absolute;
+    right: 10%;
+    bottom: -10%;
+    width: 200px;
+    height: 340px;
+    background-color: #f8fdff;
+    border-radius: 21px;
+    transform: rotate(30deg);
+}
+.product-device-2 {
+    position: absolute;
+    right: 0;
+    left: 10%;
+    bottom: 0;
+    top: 80%;
+    width: 200px;
+    height: 100px;
+    background-color: #f8fdff;
+    border-radius: 21px;
+    transform: rotate(30deg);
+}
+.product-device-3 {
+    position: absolute;
+    right: 10%;
+    left: 10%;
+    bottom: 5%;
+    top: 0;
+    width: 300px;
+    height: 180px;
+    background-color: #f8fdff;
+    border-radius: 21px;
+    transform: rotate(130deg);
+}
+.text-dan-title {
+    text-shadow: 5px 5px 2px #9fa8da;
+}
+.text-help {
+    color: #6f79a8;
+}
+/* Стили для кнопок загрузки файлов с таблиц */
+
+/* Стили для текстового поля таблицы */
+.input-text {
+  width: 380px;
+  /*padding: 8px 8px;
+  margin: 3px 0;
+  box-sizing: border-box;
+  border: 1px solid #000051;
+  border-color: #000051;
+  background-color: white;
+  color: #000051;
+  display: inline-block;*/
+}
+/* Стили для таблицы */
+.table-meteo {
+	width: 100%;
+	margin-bottom: 20px;
+	border: 1px solid #d1d9ff;
+	border-top: 1px solid #d1d9ff;
+	border-collapse: collapse;
+}
+.table-meteo th {
+    text-align: center;
+    color: #000051;
+	font-weight: bold;
+	padding: 8px;
+	background: #d1d9ff;
+	border: 1px solid #d1d9ff;
+	/*border: none;
+	border-bottom: 1px solid #d1d9ff;*/
+}
+.table-meteo td {
+    color: #6f79a8;
+    border-left: 1px solid #d1d9ff;
+	border-right: 1px solid #d1d9ff;
+	padding: 10px 15px;
+	border-bottom: 1px solid #d1d9ff;
+}
+
+/* Стили для таблицы */
+.table-wind {
+	width: 100%;
+	margin-bottom: 15px;
+	border: 1px solid #d1d9ff;
+	border-top: 1px solid #d1d9ff;
+	border-collapse: collapse;
+}
+.table-wind th {
+    text-align: center;
+    color: #000051;
+	font-weight: bold;
+	padding: 5px;
+	background: #d1d9ff;
+	border: 1px solid #d1d9ff;
+	/*border: none;
+	border-bottom: 1px solid #d1d9ff;*/
+}
+.table-wind td {
+    color: #6f79a8;
+    border-left: 1px solid #d1d9ff;
+	border-right: 1px solid #d1d9ff;
+	padding: 8px 9px;
+	border-bottom: 1px solid #d1d9ff;
+}
+
+
+/* Стили для таблицы */
+.table-invertor {
+    font-size: 10px;
+	width: 100%;
+	margin-bottom: 15px;
+	border: 1px solid #d1d9ff;
+	border-top: 1px solid #d1d9ff;
+	border-collapse: collapse;
+}
+.table-invertor th {
+    text-align: center;
+    color: #000051;
+	font-weight: bold;
+	padding: 5px;
+	background: #d1d9ff;
+	border: 1px solid #d1d9ff;
+	/*border: none;
+	border-bottom: 1px solid #d1d9ff;*/
+}
+.table-invertor td {
+    color: #6f79a8;
+    border-left: 1px solid #d1d9ff;
+	border-right: 1px solid #d1d9ff;
+	padding: 8px 9px;
+	border-bottom: 1px solid #d1d9ff;
+}
+
+.container-inv {
+    max-width: 2040px;
+}
+
+.border-graph {
+    border-bottom-style: dotted;
+    border-color: #283593;
+}
+.jumbotron {
+    padding: 1rem 1rem;
+    margin-bottom: 1rem;
+    background-color: #e8eaf6;
+    border-radius: .3rem;
+}
